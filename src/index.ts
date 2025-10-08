@@ -1,3 +1,4 @@
+// src/index.ts
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import express from 'express';
@@ -22,7 +23,7 @@ app.use(
   '/graphql',
   cors(),
   bodyParser.json(),
-  expressMiddleware(server, {
+  expressMiddleware<any>(server, {
     context: async ({ req }) => {
       const token = req.headers.webkey || req.headers.authorization;
 
