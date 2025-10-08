@@ -1,6 +1,8 @@
 // src/resolvers/predictiveCertificateResolvers.ts
 import { db } from "../db.js";
 
+
+
 export const predictiveCertificateResolvers = {
   Query: {
     // predictiveCertificates: async () => {
@@ -18,7 +20,7 @@ export const predictiveCertificateResolvers = {
     },
     
     certificateMetrics: async () => {
-      const [rows] = await db.query(`
+      const [rows] = await db.query<any>(`
         SELECT 
           COUNT(*) as total,
           SUM(CASE WHEN certificate_status_name = 'EXPIRED' THEN 1 ELSE 0 END) as expired,
@@ -80,7 +82,7 @@ export const predictiveCertificateResolvers = {
     },
     
     certificateExpirationRanges: async () => {
-      const [rows] = await db.query(`
+      const [rows] = await db.query<any>(`
         SELECT 
           SUM(CASE WHEN days_until_expiration < -200 THEN 1 ELSE 0 END) as under_minus_200,
           SUM(CASE WHEN days_until_expiration BETWEEN -200 AND -101 THEN 1 ELSE 0 END) as minus_200_to_minus_100,
